@@ -30,9 +30,16 @@ def run_experiment(num_trials, bandit_probabilities):
 
     rewards = np.zeros(num_trials)
 
+    num_optimal = 0
+
+    optimal_j = np.argmax([b.true_mean for b in bandits])
+
     for i in range(num_trials):
         # Thompson sampling
         j = np.argmax([b.sample() for b in bandits])
+
+        if j == optimal_j:
+            num_optimal += 1
 
         # pull the arm for the bandit with the largest sample
         x = bandits[j].pull()
@@ -48,4 +55,10 @@ def run_experiment(num_trials, bandit_probabilities):
     win_rates = cumulative_rewards / (np.arange(num_trials) + 1)
     performances = win_rates / np.max(bandit_probabilities)
 
-    return performances
+    return {
+        'win_rates': win_rates,
+        'performances': performances,
+        'num_times_explored': 0,
+        'num_times_exploited': num_trials,
+        'num_optimal': num_optimal
+    }

@@ -1,11 +1,7 @@
-from flask import Flask, request, render_template,jsonify
 import numpy as np
 
-app = Flask(__name__)
 
-
-NUM_TRIALS = 10000
-BANDIT_PROBABILITIES = [0.2, 0.5, 0.75]
+EPS = [0.01, 0.05, 0.1]
 
 
 class BanditArm:
@@ -24,25 +20,24 @@ class BanditArm:
         self.p_estimate = ((self.N - 1) * self.p_estimate + x) / self.N
 
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+def run_experiment(num_trials, bandit_probabilities, eps):
 
+    bandits = [BanditArm(p) for p in bandit_probabilities]
 
-@app.route('/run_experiment', methods=['GET', 'POST'])
-def run_experiment():
-    eps = float(request.form['eps'])
+    rewards = np.zeros(num_trials)
 
-    bandits = [BanditArm(p) for p in BANDIT_PROBABILITIES]
-
-    rewards = np.zeros(NUM_TRIALS)
     num_times_explored = 0
-    num_times_exploited = 0
-    num_optimal = 0
-    optimal_j = np.argmax([b.p for b in bandits])
-    # print("optimal j:", optimal_j)
 
-    for i in range(NUM_TRIALS):
+    num_times_exploited = 0
+
+    num_optimal = 0
+
+    optimal_j = np.argmax([b.p for b in bandits])
+
+    for i in range(num_trials):
+
+        # update eps
+        eps = eps / (i + 1)
 
         # use epsilon-greedy to select the next bandit
         if np.random.random() < eps:
@@ -64,17 +59,15 @@ def run_experiment():
         # update the distribution for the bandit whose arm we just pulled
         bandits[j].update(x)
 
-    result = {
-        "eps": f"eps: {eps}",
-        "ouput":
-            f"rewards : {np.mean(rewards)}\n"
-            f"maximum: {np.max(BANDIT_PROBABILITIES)}\n"
-            f"perf: {round(np.mean(rewards)/np.max(BANDIT_PROBABILITIES)*100,2)}\n"
-            f"num_times_explored: {num_times_explored}\n"
-            f"num_times_exploited: {num_times_exploited}\n"
+    # compute performance
+    cumulative_rewards = np.cumsum(rewards)
+    win_rates = cumulative_rewards / (np.arange(num_trials) + 1)
+    performances = win_rates / np.max(bandit_probabilities)
+
+    return {
+        'win_rates': win_rates,
+        'performances': performances,
+        'num_times_explored': num_times_explored,
+        'num_times_exploited': num_times_exploited,
+        'num_optimal': num_optimal
     }
-    return jsonify(result=result)
-
-
-if __name__ == '__main__':
-    app.run(debug=True)

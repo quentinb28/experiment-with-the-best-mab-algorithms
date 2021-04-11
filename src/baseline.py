@@ -1,27 +1,31 @@
 import numpy as np
 
 
-class Bandit:
-  def __init__(self, p, bound):
-    # p: the win rate
-    self.p = p
-    self.p_estimate = bound
-    self.N = 1.  # num samples collected so far
+class BanditArm:
+    def __init__(self, p):
+        # p: the win rate
+        self.p = p
+        self.p_estimate = 0.
+        self.N = 0.  # num samples collected so far
 
-  def pull(self):
-    # draw a 1 with probability p
-    return np.random.random() < self.p
+    def pull(self):
+        # draw a 1 with probability p
+        return np.random.random() < self.p
 
-  def update(self, x):
-    self.N += 1.
-    self.p_estimate = ((self.N - 1)*self.p_estimate + x) / self.N
+    def update(self, x):
+        self.N += 1.
+        self.p_estimate = ((self.N - 1) * self.p_estimate + x) / self.N
 
 
-def run_experiment(num_trials, bandit_probabilities, optimistic_initial_values):
+def run_experiment(num_trials, bandit_probabilities):
 
-    bandits = [Bandit(p, optimistic_initial_values) for p in bandit_probabilities]
+    bandits = [BanditArm(p) for p in bandit_probabilities]
 
     rewards = np.zeros(num_trials)
+
+    num_times_explored = 0
+
+    num_times_exploited = 0
 
     num_optimal = 0
 
@@ -29,7 +33,6 @@ def run_experiment(num_trials, bandit_probabilities, optimistic_initial_values):
 
     for i in range(num_trials):
 
-        # use optimistic initial values to select the next bandit
         j = np.argmax([b.p_estimate for b in bandits])
 
         if j == optimal_j:
