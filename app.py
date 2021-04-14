@@ -1,17 +1,9 @@
 # !/usr/bin/env python
 # ! -*- coding: utf-8 -*-
 
-"""
-   Copyright © Investing.com
-   Licensed under Private License.
-   See LICENSE file for more information.
-"""
-
 #################################################
 
-# Project: Affiliate Performance Optimisation
-# A/B Test - Affiliation Campaigns
-# Based on Chi-Square statistical test, alpha=.05
+# Project: Experiment With Multi-Armed Bandit Algorithms
 
 #################################################
 
@@ -24,44 +16,36 @@ import dash_html_components as html
 import dash_table as dt
 from dash.dependencies import Input, Output, State
 import plotly.graph_objs as go
-import pandas as pd
 import numpy as np
-from src import (
-    experiment,
-    greedy,
-    epsilon_greedy,
-    ucb1,
-    optimistic_initial_values,
-    thompson_sampling)
+from src import experiment
 
-# define constants
+
+# Define constants
 
 ALGORITHMS = ['Greedy', 'Epsilon Greedy', 'Optimistic Initial Values', 'UCB1', 'Thompson Sampling']
 
-EPS = [0.01, 0.05, 0.1]
+# EPS = [0.01, 0.05, 0.1]
 
-OPTIMISTIC_INITIAL_VALUES = [1, 5, 10]
+# OPTIMISTIC_INITIAL_VALUES = [1, 5, 10]
 
 METRICS = ['', 'win_rate', 'performance', 'slotA', 'slotB', 'slotC']
 
 METRICS_TITLE = ['', 'Win Rate', 'Performance', 'Slot A', 'Slot B', 'Slot C']
 
 
-# Helper functions
-
-
-# instantiate dash app
+# Instantiate dash app
 
 app = dash.Dash()
 
-# create app layout
+
+# Create app layout
 
 app.layout = html.Div([
 
     # header div
     html.Div([
 
-        # titlediv
+        # title div
         html.H1('Experiment With Multi-Armed Bandit Algorithms',
                 style={'textAlign': 'center',
                        'color': 'white',
@@ -94,7 +78,7 @@ app.layout = html.Div([
 
                 ], style={'margin': 'auto', 'width': '20%'}),
 
-                # background image Div
+                # background image div
                 html.Div([
 
                 ], style={'height': 200,
@@ -145,6 +129,7 @@ app.layout = html.Div([
 
     html.Div([
 
+        # performance graph div
         html.Div([
 
             html.Div([
@@ -153,7 +138,6 @@ app.layout = html.Div([
 
             ], style={'width': '100%', 'text-align': 'center', 'borderBottom': 'solid rgb(165, 42, 42) 0.5px'}),
 
-            # performance graph div
             html.Div([
 
                 dcc.Graph(id='performance_graph',
@@ -163,7 +147,7 @@ app.layout = html.Div([
 
         ], style={'display': 'inline-block', 'width': '50%', 'height': '500px', 'border-right': 'solid rgb(165, 42, 42) 0.5px'}),
 
-        # blocks
+        # performance table div
         html.Div([
 
             html.Div([
@@ -172,7 +156,6 @@ app.layout = html.Div([
 
             ], style={'width': '100%', 'text-align': 'center', 'borderBottom': 'solid rgb(165, 42, 42) 0.5px'}),
 
-            # metrics table div
             html.Div([
 
                 dt.DataTable(id='metrics_table',
@@ -201,19 +184,20 @@ app.layout = html.Div([
                State('C', 'value')])
 def update_graph(n_clicks, algorithm, num_trials, a, b, c):
 
+    # store bandit probabilities entered by client
     bandit_probabilities = [a, b, c]
 
-    # add relevant traces for the performance graph
+    # data to store list of relevant traces
     data = list()
 
     # add reference line for maximum performance (probability equals that of best bandit)
-
     data.append(go.Scatter(
         y=np.ones(num_trials),
         legendgroup='Expected Performance',
         name='Expected Performance',
     ))
 
+    # run experiment and add trace with algorithm performances
     output = experiment.run(algorithm, num_trials, bandit_probabilities)
 
     data.append(go.Scatter(
@@ -238,16 +222,20 @@ def update_graph(n_clicks, algorithm, num_trials, a, b, c):
                State('C', 'value')])
 def update_metrics(n_clicks, num_trials, a, b, c):
 
+    # store bandit probabilities entered by client
     bandit_probabilities = [a, b, c]
 
     final_outputs = []
 
+    # repetitions for each algorithm
     num_repetitions = 100
 
     for algorithm in ALGORITHMS:
 
+        # store values in dictionary with metrics as keys, first column for algorithm names
         final_output = {k: (0 if k != '' else algorithm) for k in METRICS}
 
+        # for each repetition run experiment and update previous mean
         for r in range(1, num_repetitions + 1):
 
             output = experiment.run(algorithm, num_trials, bandit_probabilities)
@@ -262,12 +250,14 @@ def update_metrics(n_clicks, num_trials, a, b, c):
 
             final_output['slotC'] = (final_output['slotC'] * (r - 1) + output['bandits_counter'][2]) / r
 
+        # clean values and store in dictionary
         final_output = {
 
             k: (v if isinstance(v, str) else round(v) if v > 1 else round(v*100)) for k, v in final_output.items()
 
         }
 
+        # add to final outputs
         final_outputs.append(final_output)
 
     return final_outputs

@@ -1,17 +1,27 @@
+# !/usr/bin/env python
+# ! -*- coding: utf-8 -*-
+
+#################################################
+
+# Project: Experiment With Multi-Armed Bandit Algorithms
+
+#################################################
+
+
+# Libraries
+
 import numpy as np
 
 
 class BanditArm:
 
     def __init__(self, p):
-        # p: the win rate
-        self.p = p
-        self.p_estimate = 5
-        self.N = 1.  # num samples collected so far
+        self.p = p                          # true win probability
+        self.p_estimate = 5                 # estimate win probability
+        self.N = 1                          # total collected
 
     def pull(self):
-        # draw a 1 with probability p
-        return np.random.random() < self.p
+        return np.random.random() < self.p  # success if random number (0, 1) < p
 
     def update(self, x):
         self.N += 1.
