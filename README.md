@@ -1,5 +1,6 @@
 <h1 align="center">
-  Exploration Exploitation Dilemma
+  Experiment With Multi-Armed Bandit Algorithms
+
 </p>
 
 <img src="" width=100%>
