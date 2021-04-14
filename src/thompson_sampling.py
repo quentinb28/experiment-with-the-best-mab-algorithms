@@ -1,64 +1,22 @@
 import numpy as np
 
 
-class Bandit:
-    def __init__(self, true_mean):
-        self.true_mean = true_mean
-        # parameters for mu - prior is N(0,1)
-        self.m = 0
-        self.lambda_ = 1
-        self.sum_x = 0  # for convenience
-        self.tau = 1
+class BanditArm:
+
+    def __init__(self, p):
+        self.p = p
+        self.a = 1  # rewards
+        self.b = 1  # penalties
         self.N = 0
 
     def pull(self):
-        return np.random.randn() / np.sqrt(self.tau) + self.true_mean
+        # draw a 1 with probability p
+        return np.random.random() < self.p
 
     def sample(self):
-        return np.random.randn() / np.sqrt(self.lambda_) + self.m
+        return np.random.beta(self.a, self.b)
 
     def update(self, x):
-        self.lambda_ += self.tau
-        self.sum_x += x
-        self.m = self.tau * self.sum_x / self.lambda_
+        self.a += x
+        self.b += 1 - x
         self.N += 1
-
-
-def run_experiment(num_trials, bandit_probabilities):
-
-    bandits = [Bandit(m) for m in bandit_probabilities]
-
-    rewards = np.zeros(num_trials)
-
-    num_optimal = 0
-
-    optimal_j = np.argmax([b.true_mean for b in bandits])
-
-    for i in range(num_trials):
-        # Thompson sampling
-        j = np.argmax([b.sample() for b in bandits])
-
-        if j == optimal_j:
-            num_optimal += 1
-
-        # pull the arm for the bandit with the largest sample
-        x = bandits[j].pull()
-
-        # update the distribution for the bandit whose arm we just pulled
-        bandits[j].update(x)
-
-        # update rewards
-        rewards[i] = x
-
-    # compute performance
-    cumulative_rewards = np.cumsum(rewards)
-    win_rates = cumulative_rewards / (np.arange(num_trials) + 1)
-    performances = win_rates / np.max(bandit_probabilities)
-
-    return {
-        'win_rates': win_rates,
-        'performances': performances,
-        'num_times_explored': 0,
-        'num_times_exploited': num_trials,
-        'num_optimal': num_optimal
-    }

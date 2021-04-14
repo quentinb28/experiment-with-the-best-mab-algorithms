@@ -1,15 +1,13 @@
 import numpy as np
 
 
-EPS = [0.01, 0.05, 0.1]
-
-
 class BanditArm:
+
     def __init__(self, p):
-        # p: the win rate
         self.p = p
         self.p_estimate = 0.
-        self.N = 0.  # num samples collected so far
+        self.N = 0.             # num bandit samples collected so far
+        # self.total_plays = 0.   # num total samples collected so far
 
     def pull(self):
         # draw a 1 with probability p
@@ -18,53 +16,3 @@ class BanditArm:
     def update(self, x):
         self.N += 1.
         self.p_estimate = ((self.N - 1) * self.p_estimate + x) / self.N
-
-
-def run_experiment(num_trials, bandit_probabilities, eps):
-
-    bandits = [BanditArm(p) for p in bandit_probabilities]
-
-    rewards = np.zeros(num_trials)
-
-    num_times_explored = 0
-
-    num_times_exploited = 0
-
-    num_optimal = 0
-
-    optimal_j = np.argmax([b.p for b in bandits])
-
-    for i in range(num_trials):
-
-        # use epsilon-greedy to select the next bandit
-        if np.random.random() < eps:
-            num_times_explored += 1
-            j = np.random.randint(len(bandits))
-        else:
-            num_times_exploited += 1
-            j = np.argmax([b.p_estimate for b in bandits])
-
-        if j == optimal_j:
-            num_optimal += 1
-
-        # pull the arm for the bandit with the largest sample
-        x = bandits[j].pull()
-
-        # update rewards log
-        rewards[i] = x
-
-        # update the distribution for the bandit whose arm we just pulled
-        bandits[j].update(x)
-
-    # compute performance
-    cumulative_rewards = np.cumsum(rewards)
-    win_rates = cumulative_rewards / (np.arange(num_trials) + 1)
-    performances = win_rates / np.max(bandit_probabilities)
-
-    return {
-        'win_rates': win_rates,
-        'performances': performances,
-        'num_times_explored': num_times_explored,
-        'num_times_exploited': num_times_exploited,
-        'num_optimal': num_optimal
-    }

@@ -26,19 +26,25 @@ from dash.dependencies import Input, Output, State
 import plotly.graph_objs as go
 import pandas as pd
 import numpy as np
-from src import greedy, epsilon_greedy, epsilon_greedy_decay, ucb1, optimistic_initial_values, thompson_sampling
+from src import (
+    experiment,
+    greedy,
+    epsilon_greedy,
+    ucb1,
+    optimistic_initial_values,
+    thompson_sampling)
 
 # define constants
 
-ALGORITHMS = ['Greedy', 'Epsilon Greedy', 'Epsilon Greedy Decay', 'Optimistic Initial Values', 'UCB1', 'Thompson Sampling']
+ALGORITHMS = ['Greedy', 'Epsilon Greedy', 'Optimistic Initial Values', 'UCB1', 'Thompson Sampling']
 
 EPS = [0.01, 0.05, 0.1]
 
 OPTIMISTIC_INITIAL_VALUES = [1, 5, 10]
 
-METRICS = ['', 'win_rate', 'performance', 'num_times_explored', 'num_times_exploited', 'num_optimal']
+METRICS = ['', 'win_rate', 'performance', 'slotA', 'slotB', 'slotC']
 
-METRICS_TITLE = ['', 'Win Rate', 'Performance', 'Explored', 'Exploited', 'Optimal']
+METRICS_TITLE = ['', 'Win Rate', 'Performance', 'Slot A', 'Slot B', 'Slot C']
 
 
 # Helper functions
@@ -56,7 +62,7 @@ app.layout = html.Div([
     html.Div([
 
         # titlediv
-        html.H1('Exploration Exploitation Dilemma',
+        html.H1('Experiment With Multi-Armed Bandit Algorithms',
                 style={'textAlign': 'center',
                        'color': 'white',
                        'fontSize': 40,
@@ -100,7 +106,7 @@ app.layout = html.Div([
 
                 html.Div([
 
-                    html.H3('Probability A'),
+                    html.H3('Slot A'),
 
                     dcc.Input(id="A", type="number", value=0.25, style={'text-align': 'center'}),
 
@@ -108,7 +114,7 @@ app.layout = html.Div([
 
                 html.Div([
 
-                    html.H3('Probability B'),
+                    html.H3('Slot B'),
 
                     dcc.Input(id="B", type="number", value=0.50, style={'text-align': 'center'}),
 
@@ -116,7 +122,7 @@ app.layout = html.Div([
 
                 html.Div([
 
-                    html.H3('Probability C'),
+                    html.H3('Slot C'),
 
                     dcc.Input(id="C", type="number", value=0.75, style={'text-align': 'center'}),
 
@@ -155,7 +161,7 @@ app.layout = html.Div([
 
             ]),
 
-        ], style={'display': 'inline-block', 'width': '49.5%', 'height': '500px', 'border-right': 'solid rgb(165, 42, 42) 0.5px'}),
+        ], style={'display': 'inline-block', 'width': '50%', 'height': '500px', 'border-right': 'solid rgb(165, 42, 42) 0.5px'}),
 
         # blocks
         html.Div([
@@ -200,78 +206,20 @@ def update_graph(n_clicks, algorithm, num_trials, a, b, c):
     # add relevant traces for the performance graph
     data = list()
 
-    if algorithm == 'Greedy':
-
-        output_greedy = greedy.run_experiment(num_trials, bandit_probabilities)
-
-        data.append(go.Scatter(
-            y=output_greedy['performances'],
-            legendgroup='greedy',
-            name='greedy',
-        ))
-
-    elif algorithm == 'Epsilon Greedy':
-
-        for eps in EPS:
-
-            output_eps = epsilon_greedy.run_experiment(num_trials, bandit_probabilities, eps)
-
-            data.append(go.Scatter(
-                y=output_eps['performances'],
-                legendgroup=f'eps_{eps}',
-                name=f'eps_{eps}',
-            ))
-
-    elif algorithm == 'Epsilon Greedy Decay':
-
-        eps = 1
-
-        output_eps_decay = epsilon_greedy_decay.run_experiment(num_trials, bandit_probabilities, eps)
-
-        data.append(go.Scatter(
-            y=output_eps_decay['performances'],
-            legendgroup=f'eps_{eps}_decay',
-            name=f'eps_{eps}_decay',
-        ))
-
-    elif algorithm == 'Optimistic Initial Values':
-
-        for oiv in OPTIMISTIC_INITIAL_VALUES:
-
-            performances_oiv = optimistic_initial_values.run_experiment(num_trials, bandit_probabilities, oiv)
-
-            data.append(go.Scatter(
-                y=performances_oiv['performances'],
-                legendgroup=f'oiv_{oiv}',
-                name=f'oiv_{oiv}',
-            ))
-
-    elif algorithm == 'UCB1':
-
-        performances_ucb1 = ucb1.run_experiment(num_trials, bandit_probabilities)
-
-        data.append(go.Scatter(
-            y=performances_ucb1['performances'],
-            legendgroup='ucb1',
-            name='ucb1',
-        ))
-
-    else:
-
-        performances_ts = thompson_sampling.run_experiment(num_trials, bandit_probabilities)
-
-        data.append(go.Scatter(
-            y=performances_ts['performances'],
-            legendgroup='ts',
-            name='ts',
-        ))
-
     # add reference line for maximum performance (probability equals that of best bandit)
 
     data.append(go.Scatter(
         y=np.ones(num_trials),
-        legendgroup='max_perf',
-        name='max_perf',
+        legendgroup='Expected Performance',
+        name='Expected Performance',
+    ))
+
+    output = experiment.run(algorithm, num_trials, bandit_probabilities)
+
+    data.append(go.Scatter(
+        y=output['performances'],
+        legendgroup=algorithm,
+        name=algorithm,
     ))
 
     figure = {'data': data,
@@ -292,203 +240,37 @@ def update_metrics(n_clicks, num_trials, a, b, c):
 
     bandit_probabilities = [a, b, c]
 
-    outputs = []
+    final_outputs = []
 
     num_repetitions = 100
 
-    # greedy
-    output = {k: (0 if k != '' else 'greedy') for k in METRICS}
+    for algorithm in ALGORITHMS:
 
-    for t in range(1, num_repetitions + 1):
+        final_output = {k: (0 if k != '' else algorithm) for k in METRICS}
 
-        output_greedy = greedy.run_experiment(num_trials, bandit_probabilities)
+        for r in range(1, num_repetitions + 1):
 
-        output['win_rate'] = (output['win_rate'] * (t - 1) +
-                              output_greedy['win_rates'][-1]) / t
+            output = experiment.run(algorithm, num_trials, bandit_probabilities)
 
-        output['performance'] = (output['performance'] * (t - 1) +
-                                 output_greedy['performances'][-1]) / t
+            final_output['win_rate'] = (final_output['win_rate'] * (r - 1) + output['win_rates'][-1]) / r
 
-        output['num_times_explored'] = (output['num_times_explored'] * (t - 1) +
-                                        output_greedy['num_times_explored']) / t
+            final_output['performance'] = (final_output['performance'] * (r - 1) + output['performances'][-1]) / r
 
-        output['num_times_exploited'] = (output['num_times_exploited'] * (t - 1) +
-                                         output_greedy['num_times_exploited']) / t
+            final_output['slotA'] = (final_output['slotA'] * (r - 1) + output['bandits_counter'][0]) / r
 
-        output['num_optimal'] = (output['num_optimal'] * (t - 1) +
-                                 output_greedy['num_optimal']) / t
+            final_output['slotB'] = (final_output['slotB'] * (r - 1) + output['bandits_counter'][1]) / r
 
-    # round values
-    output['win_rate'] = round(output['win_rate'] * 100)
-    output['performance'] = round(output['performance'] * 100)
-    output['num_times_explored'] = round(output['num_times_explored'])
-    output['num_times_exploited'] = round(output['num_times_exploited'])
-    output['num_optimal'] = round(output['num_optimal'])
+            final_output['slotC'] = (final_output['slotC'] * (r - 1) + output['bandits_counter'][2]) / r
 
-    outputs.append(output)
+        final_output = {
 
-    # eps greedy
-    for eps in EPS:
+            k: (v if isinstance(v, str) else round(v) if v > 1 else round(v*100)) for k, v in final_output.items()
 
-        output = {k: (0 if k != '' else f'eps_{eps}') for k in METRICS}
+        }
 
-        for t in range(1, num_repetitions + 1):
+        final_outputs.append(final_output)
 
-            output_eps = epsilon_greedy.run_experiment(num_trials, bandit_probabilities, eps)
-
-            output['win_rate'] = (output['win_rate'] * (t-1) +
-                                  output_eps['win_rates'][-1]) / t
-
-            output['performance'] = (output['performance'] * (t - 1) +
-                                     output_eps['performances'][-1]) / t
-
-            output['num_times_explored'] = (output['num_times_explored'] * (t - 1) +
-                                            output_eps['num_times_explored']) / t
-
-            output['num_times_exploited'] = (output['num_times_exploited'] * (t - 1) +
-                                             output_eps['num_times_exploited']) / t
-
-            output['num_optimal'] = (output['num_optimal'] * (t - 1) +
-                                     output_eps['num_optimal']) / t
-
-        # round values
-        output['win_rate'] = round(output['win_rate']*100)
-        output['performance'] = round(output['performance'] * 100)
-        output['num_times_explored'] = round(output['num_times_explored'])
-        output['num_times_exploited'] = round(output['num_times_exploited'])
-        output['num_optimal'] = round(output['num_optimal'])
-
-        outputs.append(output)
-
-    # eps greedy decay
-    eps = 1
-
-    output = {k: (0 if k != '' else f'eps_{eps}_decay') for k in METRICS}
-
-    for t in range(1, num_repetitions + 1):
-
-        output_eps_decay = epsilon_greedy_decay.run_experiment(num_trials, bandit_probabilities, eps)
-
-        output['win_rate'] = (output['win_rate'] * (t - 1) +
-                              output_eps_decay['win_rates'][-1]) / t
-
-        output['performance'] = (output['performance'] * (t - 1) +
-                                 output_eps_decay['performances'][-1]) / t
-
-        output['num_times_explored'] = (output['num_times_explored'] * (t - 1) +
-                                        output_eps_decay['num_times_explored']) / t
-
-        output['num_times_exploited'] = (output['num_times_exploited'] * (t - 1) +
-                                         output_eps_decay['num_times_exploited']) / t
-
-        output['num_optimal'] = (output['num_optimal'] * (t - 1) +
-                                 output_eps_decay['num_optimal']) / t
-
-    # round values
-    output['win_rate'] = round(output['win_rate'] * 100)
-    output['performance'] = round(output['performance'] * 100)
-    output['num_times_explored'] = round(output['num_times_explored'])
-    output['num_times_exploited'] = round(output['num_times_exploited'])
-    output['num_optimal'] = round(output['num_optimal'])
-
-    outputs.append(output)
-
-    # oiv
-    for oiv in OPTIMISTIC_INITIAL_VALUES:
-
-        output = {k: (0 if k != '' else f'oiv_{oiv}') for k in METRICS}
-
-        for t in range(1, num_repetitions + 1):
-
-            output_oiv = optimistic_initial_values.run_experiment(num_trials, bandit_probabilities, oiv)
-
-            output['win_rate'] = (output['win_rate'] * (t - 1) +
-                                  output_oiv['win_rates'][-1]) / t
-
-            output['performance'] = (output['performance'] * (t - 1) +
-                                     output_oiv['performances'][-1]) / t
-
-            output['num_times_explored'] = (output['num_times_explored'] * (t - 1) +
-                                            output_oiv['num_times_explored']) / t
-
-            output['num_times_exploited'] = (output['num_times_exploited'] * (t - 1) +
-                                             output_oiv['num_times_exploited']) / t
-
-            output['num_optimal'] = (output['num_optimal'] * (t - 1) +
-                                     output_oiv['num_optimal']) / t
-
-        # round values
-        output['win_rate'] = round(output['win_rate'] * 100)
-        output['performance'] = round(output['performance'] * 100)
-        output['num_times_explored'] = round(output['num_times_explored'])
-        output['num_times_exploited'] = round(output['num_times_exploited'])
-        output['num_optimal'] = round(output['num_optimal'])
-
-        outputs.append(output)
-
-    # ucb1
-    output = {k: (0 if k != '' else 'ucb1') for k in METRICS}
-
-    for t in range(1, num_repetitions + 1):
-
-        output_ucb1 = ucb1.run_experiment(num_trials, bandit_probabilities)
-
-        output['win_rate'] = (output['win_rate'] * (t - 1) +
-                              output_ucb1['win_rates'][-1]) / t
-
-        output['performance'] = (output['performance'] * (t - 1) +
-                                 output_ucb1['performances'][-1]) / t
-
-        output['num_times_explored'] = (output['num_times_explored'] * (t - 1) +
-                                        output_ucb1['num_times_explored']) / t
-
-        output['num_times_exploited'] = (output['num_times_exploited'] * (t - 1) +
-                                         output_ucb1['num_times_exploited']) / t
-
-        output['num_optimal'] = (output['num_optimal'] * (t - 1) +
-                                 output_ucb1['num_optimal']) / t
-
-    # round values
-    output['win_rate'] = round(output['win_rate'] * 100)
-    output['performance'] = round(output['performance'] * 100)
-    output['num_times_explored'] = round(output['num_times_explored'])
-    output['num_times_exploited'] = round(output['num_times_exploited'])
-    output['num_optimal'] = round(output['num_optimal'])
-
-    outputs.append(output)
-
-    # ts
-    output = {k: (0 if k != '' else 'ts') for k in METRICS}
-
-    for t in range(1, num_repetitions + 1):
-
-        output_ts = thompson_sampling.run_experiment(num_trials, bandit_probabilities)
-
-        output['win_rate'] = (output['win_rate'] * (t - 1) +
-                              output_ts['win_rates'][-1]) / t
-
-        output['performance'] = (output['performance'] * (t - 1) +
-                                 output_ts['performances'][-1]) / t
-
-        output['num_times_explored'] = (output['num_times_explored'] * (t - 1) +
-                                        output_ts['num_times_explored']) / t
-
-        output['num_times_exploited'] = (output['num_times_exploited'] * (t - 1) +
-                                         output_ts['num_times_exploited']) / t
-
-        output['num_optimal'] = (output['num_optimal'] * (t - 1) +
-                                 output_ts['num_optimal']) / t
-
-    # round values
-    output['win_rate'] = round(output['win_rate'] * 100)
-    output['performance'] = round(output['performance'] * 100)
-    output['num_times_explored'] = round(output['num_times_explored'])
-    output['num_times_exploited'] = round(output['num_times_exploited'])
-    output['num_optimal'] = round(output['num_optimal'])
-
-    outputs.append(output)
-
-    return outputs
+    return final_outputs
 
 
 # Execute application on server
