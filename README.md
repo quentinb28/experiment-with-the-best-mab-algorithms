@@ -6,9 +6,7 @@
 <img src="https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/images/experiment-with-mab-algorithms.png" width=100%>
 
 <p align="center">
- <img src="https://img.shields.io/badge/sql-v2017-pink.svg" />
  <img src="https://img.shields.io/badge/python-v3.7-yellow.svg" />
- <img src="https://img.shields.io/badge/pandas-v1.2-red.svg" />
  <img src="https://img.shields.io/badge/plotly-v4.14-purple.svg" />
  <img src="https://img.shields.io/badge/dash-v1.19-green.svg" />
  <img src="https://img.shields.io/badge/docker_image-v1-informational.svg" />
@@ -16,7 +14,7 @@
 
 # Table of Contents
 
-[Background](#background)
+[Background](#Background)
 
 [Part 1: Greedy Algorithms]
 
@@ -32,16 +30,25 @@
 
 # Background
 A business is about the continuous improvement of its products, services and processes. If they are to survive in today's fast-paced environment, businesses have to adopt a lean mentality-fail fast and learn quickly.
+
 Online advertising is seeing many actors compete in apt ways for our attention. Ads get shown if they generate the best profit. It follows that companies employ many techniques and performance measures to make quick decisions about which Ads are worth delivering.
+
 Imagine we are an advertising agency, and our clients pay us for every click they get on their Ad that was delivered on our page. The success rate in that case could be the Click-Through Rate (or CTR) - number of clicks divided by number of impressions. Our client gives us three options to choose from. Logically, we would like to send all our traffic to the Ad with the highest CTR, as it is the most profitable. In reality many additional parameters may come into play to make one such decision- Client Budget, Site Coverage, Click Prices to name just a few but I will solely focus on the CTR for now.
+
 As we do not know in advance the CTR for each option, we would need to test and send traffic to an unlimited number of samples to reach a statistically compelling conclusion. Indeed, as we collect more samples, the confidence interval of our estimate decreases and we become more confident about the Ad most profitable for us. 
+
 Do you see the problem here? 
+
 Yes! We would have to "waste" part of our traffic for less profitable Ads…
+
 This trade-off is referred to as the Exploration Exploitation Dilemma.
+
 The very good news is that many brilliant people have worked on this topic for years and there exist many solutions to tackle this issue. My objective here is simply to lay out an overview of the main solutions and how they perform. 
+
 The content is largely based on the course Bayesian Machine Learning in Python: A/B Testing by the Lazy Programmer that you can find on Udemy. I strongly recommend you take this course if you have any interest in A/B testing and Bayesian approaches!
 
-Part 1: Greedy Algorithms
+# Part 1: Greedy Algorithms
+
 Let's take our Online Advertising perspective. A naïve and well known approach is called Greedy as it would always pick the Ad with the highest CTR irrespective of the confidence in the prediction or the amount of data collected. In other words, we exploit a hundred percent of the times and leave no room for exploration except for the first iteration.
 
 CUMUL PERF SCREENSHOT
