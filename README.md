@@ -14,16 +14,23 @@
  <img src="https://img.shields.io/badge/docker_image-v1-informational.svg" />
 </p>
 
-Table of Content
-Background
-Part 1: Greedy Algorithms
-Part 2: Optimistic Initial Values
-Part 3: UCB1
-Part 4: Thompson Sampling
-Non Stationary Environment
-Conclusion
+# Table of Contents
 
-Background
+[Background](#background)
+
+[Part 1: Greedy Algorithms]
+
+[Part 2: Optimistic Initial Values]
+
+[Part 3: UCB1]
+
+[Part 4: Thompson Sampling]
+
+[Non Stationary Environment]
+
+[Conclusion]
+
+# Background
 A business is about the continuous improvement of its products, services and processes. If they are to survive in today's fast-paced environment, businesses have to adopt a lean mentality-fail fast and learn quickly.
 Online advertising is seeing many actors compete in apt ways for our attention. Ads get shown if they generate the best profit. It follows that companies employ many techniques and performance measures to make quick decisions about which Ads are worth delivering.
 Imagine we are an advertising agency, and our clients pay us for every click they get on their Ad that was delivered on our page. The success rate in that case could be the Click-Through Rate (or CTR) - number of clicks divided by number of impressions. Our client gives us three options to choose from. Logically, we would like to send all our traffic to the Ad with the highest CTR, as it is the most profitable. In reality many additional parameters may come into play to make one such decision- Client Budget, Site Coverage, Click Prices to name just a few but I will solely focus on the CTR for now.
