@@ -3,7 +3,7 @@
 
 </p>
 
-<img src="https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/images/experiment-with-mab-algorithms.gif" width=100%>
+<img src="https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/images/experiment-with-mab-algorithms.png" width=100%>
 
 <p align="center">
  <img src="https://img.shields.io/badge/sql-v2017-pink.svg" />
