@@ -54,7 +54,7 @@ I wrote a blog post about the intuition behind each algorithm and how they perfo
 
 <ins>Example: Greedy Algorithm:</ins>
 
-*Bandit class:*
+*Bandit class*
 
 Stores Bandit true win probability, estimate win probability and Bandit plays count (N).
 
@@ -74,7 +74,7 @@ class BanditArm:
         self.p_estimate = ((self.N - 1) * self.p_estimate + x) / self.N
 ```
 
-*Experiment function:*
+*Experiment function*
 
 Gets the best estimate amongst all Bandits for each iteration, pulls a new outcome and updates the Bandit estimate.
 
