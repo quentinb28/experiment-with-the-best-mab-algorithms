@@ -25,16 +25,20 @@
 ## 1. Running Docker Image :whale:
 
 ```
-open your terminal and run the commands:
+docker pull quentinb28/experiment-with-mab-algorithms:latest
 
-- docker pull quentinb28/experiment-with-mab-algorithms:latest
-
-- docker run -p 8081:8081 quentinb28/experiment-with-mab-algorithms:latest
+docker run -p 8081:8081 quentinb28/experiment-with-mab-algorithms:latest
 
 copy / paste http://0.0.0.0:8081/ on your web browser
 ```
 
 ## 2. Background
+
+A business is about the continuous improvement of its products, services and processes. If they are to survive in today's fast-paced environment, businesses have to adopt a lean mentality-fail fast and learn quickly.
+
+Online advertising is seeing many actors compete in apt ways for our attention. Ads get shown if they generate the best profit. It follows that companies employ many techniques and performance measures to make quick decisions about which Ads are worth delivering.
+
+I really invite you to have a go at my blog post [HERE](https://medium.com/p/6474af8124da/edit).
 
 ## 3. Part 1: Greedy Algorithms
 
