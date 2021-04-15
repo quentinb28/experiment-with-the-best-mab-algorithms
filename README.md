@@ -39,7 +39,7 @@ I wrote a blog post about the intuition behind each algorithm and how they perfo
 - Main file that contains the Dash app structure: 
   - [app.py](https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/app.py)
 
-- Experiment file contains the function that runs the experiments: 
+- Experiment file that contains the function that runs the experiments: 
   - [src/experiment.py](https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/src/experiment.py)
 
 - Algorithm files that contain the Bandit classes:  
@@ -78,7 +78,7 @@ class BanditArm:
 
 Gets the best estimate amongst all Bandits for each iteration, pulls a new outcome and updates the Bandit estimate.
 
-```
+```python
         for i in range(num_trials):
 
             j = np.argmax([b.p_estimate for b in bandits])
