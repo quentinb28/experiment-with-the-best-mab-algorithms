@@ -27,6 +27,8 @@ docker pull quentinb28/experiment-with-mab-algorithms:latest
 
 docker run -p 8081:8081 quentinb28/experiment-with-mab-algorithms:latest
 
+run http://0.0.0.0:8081/ in browser
+
 ```
 
 ## 2. Reading My Super Blog Post :computer:
