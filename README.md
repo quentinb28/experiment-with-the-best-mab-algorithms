@@ -1,9 +1,6 @@
 <h1 align="center">
   Experiment With Multi-Armed Bandit Algorithms
-
-</p>
-
-<img src="https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/images/experiment-with-mab-algorithms.png" width=100%>
+</h1>
 
 <p align="center">
  <img src="https://img.shields.io/badge/python-v3.7-yellow.svg" />
@@ -11,7 +8,7 @@
  <img src="https://img.shields.io/badge/dash-v1.19-green.svg" />
  <img src="https://img.shields.io/badge/docker_image-v1-informational.svg" />
 </p>
-
+  
 ## Table of Contents
 
 1. [Running The Docker Image](#Running-The-Docker-Image)
@@ -19,6 +16,8 @@
 3. [Understanding My Repository](#Understanding-My-Repository)
 4. [Deciphering The Code](#Deciphering-The-Code)
 5. [Contributing](#Contributing)
+
+<img src="https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/images/experiment-with-mab-algorithms.png" width=100%>
 
 ## 1. Running The Docker Image :whale:
 
