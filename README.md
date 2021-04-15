@@ -25,9 +25,11 @@
 ## 1. Running Docker Image :whale:
 
 ```
-docker pull quentinb28/experiment-with-mab-algorithms:latest
+open your terminal and run the commands:
 
-docker run -p 8081:8081 quentinb28/experiment-with-mab-algorithms:latest
+- docker pull quentinb28/experiment-with-mab-algorithms:latest
+
+- docker run -p 8081:8081 quentinb28/experiment-with-mab-algorithms:latest
 
 copy / paste http://0.0.0.0:8081/ on your web browser
 ```
