@@ -12,4 +12,12 @@
  <img src="https://img.shields.io/badge/docker_image-v1-informational.svg" />
 </p>
 
-## 1. Pulling Docker Image :whale:
+## 1. Running Docker Image :whale:
+
+```
+docker pull quentinb28/experiment-with-mab-algorithms:latest
+
+docker run -p 8081:8081 quentinb28/experiment-with-mab-algorithms:latest
+
+copy / paste http://0.0.0.0:8081/ on your web browser
+```
