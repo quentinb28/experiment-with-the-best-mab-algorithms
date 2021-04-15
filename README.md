@@ -39,10 +39,10 @@ I wrote a blog post about the intuition behind each algorithm and how they perfo
 - Main file that contains the Dash app structure: 
   - [app.py](https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/app.py)
 
-- Experiment function contains the function that runs the experiments: 
+- Experiment file contains the function that runs the experiments: 
   - [src/experiment.py](https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/src/experiment.py)
 
-- Bandit classes that store and update Bandit estimates:  
+- Algorithm files that contain the Bandit classes:  
   - [src/greedy.py](https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/src/greedy.py)
   - [src/epsilon_greedy.py](https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/src/epsilon_greedy.py)
   - [src/optimistic_initial_values.py](https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/src/optimistic_initial_values.py)
