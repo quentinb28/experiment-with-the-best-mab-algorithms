@@ -1,9 +1,6 @@
 <h1 align="center">
   Experiment With Multi-Armed Bandit Algorithms
-
-</p>
-
-<img src="https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/images/experiment-with-mab-algorithms.png" width=100%>
+</h1>
 
 <p align="center">
  <img src="https://img.shields.io/badge/python-v3.7-yellow.svg" />
@@ -11,14 +8,16 @@
  <img src="https://img.shields.io/badge/dash-v1.19-green.svg" />
  <img src="https://img.shields.io/badge/docker_image-v1-informational.svg" />
 </p>
+  
+<h2 align="center">Table of Contents</h2>
 
-## Table of Contents
+<h4 align="center">1. Running The Docker Image :whale:</h4>
+<h4 align="center">2. Reading My Super Blog Post :computer: :grin:</h4>
+<h4 align="center">3. Understanding My Repository :open_file_folder:</h4>
+<h4 align="center">4. Deciphering The Code :muscle:</h4>
+<h4 align="center">5. Contributing :+1:</h4>
 
-1. [Running The Docker Image](#Running-The-Docker-Image)
-2. [Reading My Super Blog Post](#Reading-My-Super-Blog-Post)
-3. [Understanding My Repository](#Understanding-My-Repository)
-4. [Deciphering The Code](#Deciphering-The-Code)
-5. [Contributing](#Contributing)
+<img src="https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/images/experiment-with-mab-algorithms.png" width=100%>
 
 ## 1. Running The Docker Image :whale:
 
@@ -31,7 +30,7 @@ run http://0.0.0.0:8081/ in browser
 
 ```
 
-## 2. Reading My Super Blog Post :computer:
+## 2. Reading My Super Blog Post :computer: :grin:
 
 I wrote a blog post about the intuition behind each algorithm and how they perform. Click [HERE](https://medium.com/p/6474af8124da/edit) and have fun !
 
@@ -95,7 +94,7 @@ Gets the best estimate amongst all Bandits for each iteration, pulls a new outco
             bandits[j].update(x)
 ```
 
-## 5. Contributing
+## 5. Contributing :+1:
 
 If you'd like to contribute, please fork the repository and use a feature
 branch. Pull requests are warmly welcome.
