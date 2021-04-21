@@ -37,7 +37,7 @@ EPSILON = .1
 
 # Define run function
 
-def run(algorithm, num_trials, bandit_probabilities):
+def run(investment, algorithm, num_trials, bandit_probabilities):
 
     # Instantiate all bandits with their true win probability
     bandits = [MAB_CLASSES_MAPPING[algorithm].BanditArm(p) for p in bandit_probabilities]
@@ -68,6 +68,14 @@ def run(algorithm, num_trials, bandit_probabilities):
 
             rewards[i] = x
 
+            if x == 1:
+
+                investment += i + 1
+
+            else:
+
+                investment -= i + 1
+
             bandits[j].update(x)
 
     # Edge case for UCB1 with calculation of Decision Value based on total number of plays
@@ -95,6 +103,14 @@ def run(algorithm, num_trials, bandit_probabilities):
 
             rewards[i] = x
 
+            if x == 1:
+
+                investment += i + 1
+
+            else:
+
+                investment -= i + 1
+
             bandits[j].update(x)
 
     # Edge case for Thompson Sampling with sampling the win probability estimate in its distribution
@@ -113,6 +129,14 @@ def run(algorithm, num_trials, bandit_probabilities):
 
             rewards[i] = x
 
+            if x == 1:
+
+                investment += i + 1
+
+            else:
+
+                investment -= i + 1
+
             bandits[j].update(x)
 
     else:
@@ -128,15 +152,21 @@ def run(algorithm, num_trials, bandit_probabilities):
 
             rewards[i] = x
 
+            if x == 1:
+
+                investment += i + 1
+
+            else:
+
+                investment -= i + 1
+
             bandits[j].update(x)
 
     # compute performance
-    cumulative_rewards = np.cumsum(rewards)
-    win_rates = cumulative_rewards / (np.arange(num_trials) + 1)
-    performances = win_rates / np.max(bandit_probabilities)
+    cumulative_win_rates = np.cumsum(rewards) / (np.arange(num_trials) + 1)
+    performances = cumulative_win_rates / np.max(bandit_probabilities)
 
     return {
-        'win_rates': win_rates,
         'performances': performances,
-        'bandits_counter': bandits_counter
+        'investment': investment
     }
