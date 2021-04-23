@@ -2,14 +2,46 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="45dce42b-58fa-4d68-bd67-8715cc26d995" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/quentinbracq.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/exploration-exploitation-dilemma.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/draft.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MAB Algorithm Performance.ipynb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/activate" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/activate.csh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/activate.fish" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/activate.ps1" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/activate.xsh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/activate_this.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/dash-generate-components" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/easy_install" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/easy_install-3.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/easy_install3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/f2py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/f2py3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/f2py3.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/flask" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/futurize" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/pasteurize" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/pip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/pip-3.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/pip3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/pip3.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/python" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/python3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/python3.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/renderer" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/wheel" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/wheel-3.7" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/bin/wheel3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/etc/jupyter/nbconfig/notebook.d/plotlywidget.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/pyvenv.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/share/jupyter/nbextensions/plotlywidget/extension.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/experiment-with-mab-algorithms/share/jupyter/nbextensions/plotlywidget/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/epsilon_greedy.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/epsilon_greedy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/experiment.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/experiment.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/greedy.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/greedy.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/optimistic_initial_values.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/optimistic_initial_values.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/thompson_sampling.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/thompson_sampling.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ucb1.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/ucb1.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,14 +51,44 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="497">
-              <caret line="69" column="43" selection-start-line="69" selection-start-column="43" selection-end-line="69" selection-end-column="43" />
+            <state relative-caret-position="3825">
+              <caret line="255" column="114" lean-forward="true" selection-start-line="255" selection-start-column="114" selection-end-line="255" selection-end-column="114" />
               <folding>
-                <element signature="e#413#424#0" expanded="true" />
+                <element signature="e#224#235#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/greedy.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="588">
+              <caret line="56" column="26" selection-start-line="56" selection-start-column="26" selection-end-line="56" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/experiment.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="855">
+              <caret line="57" column="24" lean-forward="true" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
+              <folding>
+                <element signature="e#224#242#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/optimistic_initial_values.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="578">
+              <caret line="57" selection-start-line="57" selection-end-line="63" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -34,8 +96,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/thompson_sampling.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+            <state relative-caret-position="573">
+              <caret line="62" column="26" selection-start-line="62" selection-start-column="26" selection-end-line="62" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -43,20 +105,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/epsilon_greedy.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="603">
-              <caret line="64" column="31" selection-start-line="64" selection-start-column="31" selection-end-line="64" selection-end-column="31" />
+            <state relative-caret-position="678">
+              <caret line="74" column="5" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/draft.py">
+        <entry file="file://$PROJECT_DIR$/src/ucb1.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="891">
-              <caret line="79" column="23" selection-start-line="79" selection-start-column="23" selection-end-line="79" selection-end-column="23" />
-              <folding>
-                <element signature="e#0#57#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="678">
+              <caret line="80" column="5" selection-start-line="80" selection-start-column="5" selection-end-line="80" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -70,6 +129,13 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>METRICS</find>
+      <find>baseline</find>
+      <find>border-r</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -80,20 +146,25 @@
         <option value="$PROJECT_DIR$/client.py" />
         <option value="$PROJECT_DIR$/server.py" />
         <option value="$PROJECT_DIR$/hello.py" />
-        <option value="$PROJECT_DIR$/draft.py" />
         <option value="$PROJECT_DIR$/src/__init__.py" />
+        <option value="$PROJECT_DIR$/src/baseline.py" />
+        <option value="$PROJECT_DIR$/src/epsilon_greedy_decay.py" />
+        <option value="$PROJECT_DIR$/src/experiment_graph.py" />
+        <option value="$PROJECT_DIR$/draft.py" />
         <option value="$PROJECT_DIR$/src/ucb1.py" />
+        <option value="$PROJECT_DIR$/full_map.py" />
         <option value="$PROJECT_DIR$/src/optimistic_initial_values.py" />
         <option value="$PROJECT_DIR$/src/thompson_sampling.py" />
         <option value="$PROJECT_DIR$/src/epsilon_greedy.py" />
+        <option value="$PROJECT_DIR$/src/greedy.py" />
+        <option value="$PROJECT_DIR$/src/experiment.py" />
         <option value="$PROJECT_DIR$/app.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" fullScreen="true">
-    <option name="y" value="25" />
     <option name="width" value="1440" />
-    <option name="height" value="875" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -105,17 +176,12 @@
         <subPane>
           <expand>
             <path>
-              <item name="exploration-exploitation-dilemma" type="b2602c69:ProjectViewProjectNode" />
-              <item name="exploration-exploitation-dilemma" type="462c0819:PsiDirectoryNode" />
+              <item name="experiment-with-the-best-mab-algorithms" type="b2602c69:ProjectViewProjectNode" />
+              <item name="experiment-with-the-best-mab-algorithms" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="exploration-exploitation-dilemma" type="b2602c69:ProjectViewProjectNode" />
-              <item name="exploration-exploitation-dilemma" type="462c0819:PsiDirectoryNode" />
-              <item name="exploration-exploitation-dilemma" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="exploration-exploitation-dilemma" type="b2602c69:ProjectViewProjectNode" />
-              <item name="exploration-exploitation-dilemma" type="462c0819:PsiDirectoryNode" />
+              <item name="experiment-with-the-best-mab-algorithms" type="b2602c69:ProjectViewProjectNode" />
+              <item name="experiment-with-the-best-mab-algorithms" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -266,18 +332,22 @@
       <option name="presentableId" value="Default" />
       <updated>1614266460798</updated>
       <workItem from="1614266463822" duration="1700000" />
-      <workItem from="1617912859630" duration="20094000" />
+      <workItem from="1617912859630" duration="53918000" />
+      <workItem from="1618392671395" duration="2395000" />
+      <workItem from="1618475112217" duration="1569000" />
+      <workItem from="1618603297258" duration="24484000" />
+      <workItem from="1619038722585" duration="165000" />
+      <workItem from="1619075330968" duration="13581000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="21794000" />
+    <option name="totallyTimeSpent" value="97812000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2532189" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27110156" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -300,7 +370,7 @@
       <window_info anchor="right" id="Database" order="4" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2532189" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27110156" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -327,6 +397,8 @@
     <option name="version" value="1" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/experiment_with_mab_algorithms$epsilon_greedy.coverage" NAME="epsilon_greedy Coverage Results" MODIFIED="1618843830907" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/experiment_with_the_best_mab_algorithms$epsilon_greedy.coverage" NAME="epsilon_greedy Coverage Results" MODIFIED="1619093733078" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/exploration_exploitation_dilemma$model.coverage" NAME="model Coverage Results" MODIFIED="1614267311468" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/exploration_exploitation_dilemma$epsilon_greedy.coverage" NAME="epsilon_greedy Coverage Results" MODIFIED="1617970050408" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/exploration_exploitation_dilemma$server.coverage" NAME="server Coverage Results" MODIFIED="1617954574981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -340,70 +412,72 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="22" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="41" column="34" selection-start-line="41" selection-start-column="34" selection-end-line="41" selection-end-column="34" />
-          <folding>
-            <element signature="e#11#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/draft.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="891">
-          <caret line="79" column="23" selection-start-line="79" selection-start-column="23" selection-end-line="79" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#57#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ucb1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="46" selection-start-line="46" selection-end-line="51" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/client.py" />
+    <entry file="file://$PROJECT_DIR$/model.py" />
+    <entry file="file://$PROJECT_DIR$/src/baseline.py" />
+    <entry file="file://$PROJECT_DIR$/src/epsilon_greedy_decay.py" />
+    <entry file="file://$PROJECT_DIR$/draft.py" />
+    <entry file="file://$PROJECT_DIR$/src/ucb1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="678">
+          <caret line="80" column="5" selection-start-line="80" selection-start-column="5" selection-end-line="80" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/greedy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="56" column="26" selection-start-line="56" selection-start-column="26" selection-end-line="56" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/optimistic_initial_values.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+        <state relative-caret-position="578">
+          <caret line="57" selection-start-line="57" selection-end-line="63" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/thompson_sampling.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="23" column="19" selection-start-line="23" selection-start-column="19" selection-end-line="23" selection-end-column="19" />
+        <state relative-caret-position="573">
+          <caret line="62" column="26" selection-start-line="62" selection-start-column="26" selection-end-line="62" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/epsilon_greedy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="603">
-          <caret line="64" column="31" selection-start-line="64" selection-start-column="31" selection-end-line="64" selection-end-column="31" />
+        <state relative-caret-position="678">
+          <caret line="74" column="5" selection-start-line="74" selection-start-column="5" selection-end-line="74" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="497">
-          <caret line="69" column="43" selection-start-line="69" selection-start-column="43" selection-end-line="69" selection-end-column="43" />
+        <state relative-caret-position="3825">
+          <caret line="255" column="114" lean-forward="true" selection-start-line="255" selection-start-column="114" selection-end-line="255" selection-end-column="114" />
           <folding>
-            <element signature="e#413#424#0" expanded="true" />
+            <element signature="e#224#235#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/full_map.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="224">
+          <caret line="31" column="46" selection-start-line="31" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/experiment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="855">
+          <caret line="57" column="24" lean-forward="true" selection-start-line="57" selection-start-column="24" selection-end-line="57" selection-end-column="24" />
+          <folding>
+            <element signature="e#224#242#0" expanded="true" />
           </folding>
         </state>
       </provider>
