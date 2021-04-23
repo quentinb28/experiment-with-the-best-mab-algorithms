@@ -1,5 +1,5 @@
 <h1 align="center">
-  Experiment With Multi-Armed Bandit Algorithms
+  Experiment With The Best Multi-Armed Bandit Algorithms
 </h1>
 
 <p align="center">
@@ -40,10 +40,10 @@ I wrote a blog post about the intuition behind each algorithm and how they perfo
 - Main file that contains the Dash app structure: 
   - [app.py](https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/app.py)
 
-- Experiment file that contains the function that runs the experiments: 
+- Experiment file that contains the function that runs the repetitions: 
   - [src/experiment.py](https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/src/experiment.py)
 
-- Algorithm files that contain the Bandit classes:  
+- Algorithm files that contain the Bandit classes and thee functions that run the trials: 
   - [src/greedy.py](https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/src/greedy.py)
   - [src/epsilon_greedy.py](https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/src/epsilon_greedy.py)
   - [src/optimistic_initial_values.py](https://github.com/quentinb28/experiment-with-mab-algorithms/blob/main/src/optimistic_initial_values.py)
