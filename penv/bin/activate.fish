@@ -57,7 +57,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV '/Users/quentinbracq/Desktop/pycharmprojects/experiment-with-mab-algorithms/experiment-with-mab-algorithms'
+set -gx VIRTUAL_ENV '/Users/quentinbracq/Desktop/pycharmprojects/experiment-with-the-best-mab-algorithms/penv'
 
 # https://github.com/fish-shell/fish-shell/issues/436 altered PATH handling
 if test (echo $FISH_VERSION | head -c 1) -lt 3

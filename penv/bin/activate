@@ -46,7 +46,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV='/Users/quentinbracq/Desktop/pycharmprojects/experiment-with-mab-algorithms/experiment-with-mab-algorithms'
+VIRTUAL_ENV='/Users/quentinbracq/Desktop/pycharmprojects/experiment-with-the-best-mab-algorithms/penv'
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

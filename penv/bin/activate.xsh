@@ -28,7 +28,7 @@ def _deactivate(args):
 _deactivate(["nondestructive"])
 aliases["deactivate"] = _deactivate
 
-$VIRTUAL_ENV = r"/Users/quentinbracq/Desktop/pycharmprojects/experiment-with-mab-algorithms/experiment-with-mab-algorithms"
+$VIRTUAL_ENV = r"/Users/quentinbracq/Desktop/pycharmprojects/experiment-with-the-best-mab-algorithms/penv"
 
 $_OLD_VIRTUAL_PATH = $PATH
 $PATH = $PATH[:]
