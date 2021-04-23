@@ -13,9 +13,7 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-import dash_table as dt
 from dash.dependencies import Input, Output, State
-import plotly
 import plotly.graph_objs as go
 import plotly.express as px
 import numpy as np
@@ -26,19 +24,130 @@ from src import experiment
 
 ALGORITHMS = ['Greedy', 'Epsilon Greedy', 'Optimistic Initial Values', 'UCB1', 'Thompson Sampling']
 
-# EPS = [0.01, 0.05, 0.1]
-
-# OPTIMISTIC_INITIAL_VALUES = [1, 5, 10]
-
 METRICS = ['', 'win_rate', 'performance', 'slotA', 'slotB', 'slotC']
 
 METRICS_TITLE = ['', 'Win Rate', 'Performance', 'Slot A', 'Slot B', 'Slot C']
 
-NUM_TRIALS = 100
-
 NUM_REPETITIONS = 100
 
-COLORS = plotly.colors.DEFAULT_PLOTLY_COLORS
+
+# Helper functions
+
+def getGraphFigure(outputs):
+
+    data = list()
+
+    for output in outputs:
+
+        data.append(go.Scatter(
+            y=output['cumulative_performance_avg'],
+            legendgroup=output['algorithm'],
+            name=output['algorithm']
+        ))
+
+    # reference line = max performance
+    data.append(go.Scatter(
+        y=np.ones(len(output['cumulative_performance_avg'])),
+        legendgroup='Expected Performance',
+        name='Expected Performance'
+    ))
+
+    figure = go.Figure({'data': data,
+                        'layout': {'legend': {'orientation':'h'},
+                                   'margin': {'t': 30},
+                                   'height': 300,
+                                   'xaxis': dict(showticklabels=False)}})
+
+    figure.update_yaxes(visible=False, showticklabels=False)
+
+    return figure
+
+
+def getViolinFigure(outputs):
+
+    data = {'algorithms': [], 'final_performances': []}
+
+    for output in outputs:
+
+        data['algorithms'] += [output['algorithm']]*len(output['final_performances'])
+
+        data['final_performances'] += output['final_performances']
+
+    figure = px.violin(data, x='algorithms', y='final_performances', color='algorithms', box=True, height=300)
+
+    figure.update_layout(showlegend=False, xaxis=dict(title=''), yaxis=dict(title=''))
+
+    return figure
+
+
+def getBarFigure(outputs):
+
+    data = {'algorithms': [], 'investments': []}
+
+    for output in outputs:
+
+        data['algorithms'].append(output['algorithm'])
+
+        data['investments'].append(output['investment'])
+
+    # set negative gains to 0$
+    data['investments'] = [0 if i < 0 else i for i in data['investments']]
+
+    most_profitable_index = np.argmax(data['investments'])
+
+    # highlight most profitable (color)
+    colors = ['lightslategray', ] * len(data['investments'])
+
+    colors[most_profitable_index] = 'crimson'
+
+    figure = go.Figure(data=[go.Bar(
+        x=data['algorithms'],
+        y=data['investments'],
+        text=[f'{int(i)}$' for i in data['investments']],
+        textposition='auto',
+        marker_color=colors)],
+        layout={'legend': {'x': 1, 'y': 0.8},
+                'margin': {'t': 30},
+                'height': 300})
+
+    return figure
+
+
+def getPieFigure(outputs):
+
+    data = {'algorithms': [], 'investments': []}
+
+    for output in outputs:
+
+        data['algorithms'].append(output['algorithm'])
+
+        data['investments'].append(output['investment'])
+
+    most_profitable_index = np.argmax(data['investments'])
+
+    # highlight most profitable (color)
+    colors = ['lightslategray', ] * len(data['investments'])
+
+    colors[most_profitable_index] = 'crimson'
+
+    # highlight most profitable (size)
+    pull = np.zeros(len(data['investments']))
+
+    pull[most_profitable_index] = 0.1
+
+    figure = go.Figure(data=[go.Pie(
+        labels=data['algorithms'],
+        values=data['investments'],
+        pull=pull)],
+        layout={'legend': {'x': 1, 'y': 0.8},
+                'margin': {'t': 30},
+                'height': 300})
+
+    figure.update_traces(marker=dict(colors=colors))
+
+    figure.update_layout(margin=dict(t=0, b=0, l=0, r=0))
+
+    return figure
 
 
 # Instantiate dash app
@@ -50,10 +159,11 @@ app = dash.Dash()
 
 app.layout = html.Div([
 
-    # header div
+    # HEADER
+
     html.Div([
 
-        # title div
+        # title
         html.H1('Experiment With The Best MAB Algorithms',
                 style={'textAlign': 'center',
                        'color': 'white',
@@ -64,20 +174,21 @@ app.layout = html.Div([
                        'background-color': 'rgb(165, 42, 42',
                        'borderTop': 'solid black'}),
 
-        # filters div
+        # filters
         html.Div([
 
             html.Div([
 
+                # initial investment
                 html.Div([
 
-                    html.H3('How much do you want to bet? ($)'),
+                    html.H3('How much do you want to invest? ($)'),
 
                     dcc.Input(id="investment", type="number", value=1000, style={'text-align': 'center'}),
 
                 ], style={'margin': 'auto', 'width': '20%'}),
 
-                # background image div
+                # background image
                 html.Div([
 
                 ], style={'height': 100,
@@ -87,6 +198,7 @@ app.layout = html.Div([
                           'background-position': 'center top',
                           'margin': '10px'}),
 
+                # win rate Slot A
                 html.Div([
 
                     html.H3('Slot A'),
@@ -95,6 +207,7 @@ app.layout = html.Div([
 
                 ], style={'display': 'inline-block', 'width': '6.5%'}),
 
+                # win rate Slot B
                 html.Div([
 
                     html.H3('Slot B'),
@@ -103,6 +216,7 @@ app.layout = html.Div([
 
                 ], style={'display': 'inline-block', 'width': '6.5%'}),
 
+                # win rate Slot C
                 html.Div([
 
                     html.H3('Slot C'),
@@ -111,6 +225,7 @@ app.layout = html.Div([
 
                 ], style={'display': 'inline-block', 'width': '6.5%'}),
 
+                # submit button
                 html.Div([
 
                     html.Button(id='submit-button-state', n_clicks=0, children='Submit'),
@@ -126,6 +241,8 @@ app.layout = html.Div([
 
     ]),
 
+    # BODY
+
     html.Div([
 
         # LEFT SIDE: PERFORMANCE
@@ -134,12 +251,13 @@ app.layout = html.Div([
 
             html.Div([
 
-                html.H3('Cumulative Performance'),
+                html.H3('Performance'),
 
-                dcc.Markdown(id='markdown_performance')
+                dcc.Markdown(id='markdown_performance', children='''_Performance is averaged over 100 repetitions._''')
 
             ], style={'width': '100%', 'text-align': 'center', 'borderBottom': 'solid rgb(165, 42, 42) 0.5px'}),
 
+            # performance graph
             html.Div([
 
                 dcc.Graph(id='performance_graph',
@@ -147,9 +265,10 @@ app.layout = html.Div([
 
             ],  style={'height': '300px', 'margin': '20px'}),
 
+            # performance violin plot
             html.Div([
 
-                dcc.Graph(id='violin_plot',
+                dcc.Graph(id='performance_violin',
                           figure={})
 
             ], style={'height': '300px', 'margin': '20px'}),
@@ -162,29 +281,29 @@ app.layout = html.Div([
 
             html.Div([
 
-                html.H3('Total Gains'),
+                html.H3('Gains'),
 
-                dcc.Markdown(id='markdown_gains')
+                dcc.Markdown(id='markdown_gains', children='''_Gains are averaged over 100 repetitions._''')
 
             ], style={'width': '100%', 'text-align': 'center', 'borderBottom': 'solid rgb(165, 42, 42) 0.5px'}),
 
+            # gains bar chart
             html.Div([
 
-                dcc.Graph(id='bar_chart',
+                dcc.Graph(id='investment_bar',
                           figure={})
 
             ], style={'height': '300px', 'margin': '20px'}),
 
+            # gains pie chart
             html.Div([
 
-                dcc.Graph(id='pie_chart',
+                dcc.Graph(id='investment_pie',
                           figure={})
 
             ], style={'height': '300px', 'margin': '20px'}),
 
         ], style={'display': 'inline-block', 'width': '49.5%'}),
-
-        #'border-right': 'solid rgb(165, 42, 42) 0.5px'
 
     ])
 
@@ -192,151 +311,35 @@ app.layout = html.Div([
 
 
 @app.callback([Output('performance_graph', 'figure'),
-               Output('violin_plot', 'figure'),
-               Output('markdown_performance', 'children')],
+               Output('performance_violin', 'figure'),
+               Output('investment_bar', 'figure'),
+               Output('investment_pie', 'figure')],
               [Input('submit-button-state', 'n_clicks'),
                State('investment', 'value'),
                State('A', 'value'),
                State('B', 'value'),
                State('C', 'value')])
-def update_graph(n_clicks, investment, a, b, c):
+def update_figures(n_clicks, investment, a, b, c):
 
-    # store bandit probabilities entered by client
     bandit_probabilities = [a, b, c]
 
-    # data to store list of relevant traces
-    data = list()
-
-    violin_data = {'algo': [], 'perf': []}
+    outputs = []
 
     for algorithm in ALGORITHMS:
 
-        performances_avg = 0
+        output = experiment.run_repetitions(algorithm, investment, bandit_probabilities)
 
-        for repetition in range(NUM_REPETITIONS):
+        outputs.append(output)
 
-            # run experiment and add trace with algorithm performances
-            output = experiment.run(investment, algorithm, NUM_TRIALS, bandit_probabilities)
+    graph_figure = getGraphFigure(outputs)
 
-            if np.sum(performances_avg) == 0:
+    violin_figure = getViolinFigure(outputs)
 
-                performances_avg = output['performances']
+    bar_figure = getBarFigure(outputs)
 
-            else:
+    pie_figure = getPieFigure(outputs)
 
-                performances_avg = np.mean([performances_avg, output['performances']], axis=0)
-
-            violin_data['algo'].append(algorithm)
-            violin_data['perf'].append(output['performances'][-1])
-
-        data.append(go.Scatter(
-            y=performances_avg,
-            legendgroup=algorithm,
-            name=algorithm,
-        ))
-
-    # add reference line for maximum performance (probability equals that of best bandit)
-    data.append(go.Scatter(
-        y=np.ones(NUM_TRIALS),
-        legendgroup='Expected Performance',
-        name='Expected Performance',
-    ))
-
-    figure_graph = go.Figure({'data': data,
-                              'layout': {'legend': {'orientation':'h'},
-                                         'margin': {'t': 30},
-                                         'height': 300,
-                                         'xaxis': dict(showticklabels=False)}})
-
-    figure_graph.update_yaxes(visible=False, showticklabels=False)
-
-    """figure_violin = go.Figure(data=[go.Violin(y=violin_data['perf'], x=violin_data['algo'], meanline_visible=True)],
-                       layout={'legend': {'x': 1, 'y': 0.8},
-                   'margin': {'t': 30},
-                   'height': 300})"""
-
-    figure_violin = px.violin(violin_data, x='algo', y='perf', color='algo', box=True, height=300)
-
-    figure_violin.update_layout(showlegend=False, xaxis=dict(title=''), yaxis=dict(title=''))
-
-    return figure_graph, figure_violin, f'''_Performances are averaged over 100 repetitions for {investment} trials._'''
-
-
-@app.callback([Output('bar_chart', 'figure'),
-               Output('pie_chart', 'figure'),
-               Output('markdown_gains', 'children')],
-              [Input('submit-button-state', 'n_clicks'),
-               State('investment', 'value'),
-               State('A', 'value'),
-               State('B', 'value'),
-               State('C', 'value')])
-def update_bar_chart(n_clicks, investment, a, b, c):
-
-    # store bandit probabilities entered by client
-    bandit_probabilities = [a, b, c]
-
-    # data to store list of relevant traces
-    # data = list()
-
-    data = {'algo': [], 'investment': []}
-
-    for algorithm in ALGORITHMS:
-
-        investment_avg = 0
-
-        for repetition in range(NUM_REPETITIONS):
-
-            # run experiment and add trace with algorithm performances
-            output = experiment.run(investment, algorithm, investment, bandit_probabilities)
-
-            if investment_avg == 0:
-
-                investment_avg = output['investment']
-
-            else:
-
-                investment_avg = np.mean([investment_avg, output['investment']], axis=0)
-
-        data['algo'].append(algorithm)
-        data['investment'].append(investment_avg-investment)
-
-    data['investment'] = [0 if i < 0 else i for i in data['investment']]
-
-    colors = ['lightslategray', ] * len(data['investment'])
-
-    most_profitable_index = np.argmax(data['investment'])
-
-    colors[most_profitable_index] = 'crimson'
-
-    figure_bar_chart = go.Figure(data=[go.Bar(
-        x=data['algo'],
-        y=data['investment'],
-        text=[f'{int(i)}$' for i in data['investment']],
-        textposition='auto',
-        marker_color=colors)],
-        layout={'legend': {'x': 1, 'y': 0.8},
-                   'margin': {'t': 30},
-                   'height': 300})
-
-    figure_bar_chart.update_yaxes(visible=False, showticklabels=False)
-
-    pull = np.zeros(len(data['investment']))
-
-    pull[most_profitable_index] = 0.1
-
-    figure_pie_chart = go.Figure(data=[go.Pie(
-        labels=data['algo'],
-        values=data['investment'],
-        pull=pull)],
-        layout={'legend': {'x': 1, 'y': 0.8},
-                'margin': {'t': 30},
-                'height': 300})
-
-    figure_pie_chart.update_traces(marker=dict(colors=colors))
-
-    figure_pie_chart.update_layout(margin=dict(t=0, b=0, l=0, r=0))
-
-    return figure_bar_chart, figure_pie_chart, f'''_Gains are averaged over 100 repetitions for {investment} trials (t$ invested at trial t)._'''
+    return graph_figure, violin_figure, bar_figure, pie_figure
 
 
 # Execute application on server

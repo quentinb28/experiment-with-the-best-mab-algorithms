@@ -26,3 +26,40 @@ class BanditArm:
     def update(self, x):
         self.N += 1.
         self.p_estimate = ((self.N - 1) * self.p_estimate + x) / self.N
+
+
+# run trials function
+
+def run_trials(investment, bandits):
+
+    num_trials = investment
+
+    rewards = np.zeros(num_trials)
+
+    for i in range(num_trials):
+
+        j = np.argmax([b.p_estimate for b in bandits])
+
+        x = bandits[j].pull()
+
+        rewards[i] = x
+
+        if x == 1:
+
+            investment += i + 1
+
+        else:
+
+            investment -= i + 1
+
+        bandits[j].update(x)
+
+    cumulative_performance = np.cumsum(rewards) / (np.arange(num_trials) + 1) / max([b.p for b in bandits])
+
+    return {
+
+        'cumulative_performance': cumulative_performance,
+        'investment': investment
+
+    }
+
